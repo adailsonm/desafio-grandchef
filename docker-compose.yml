@@ -19,7 +19,6 @@ services:
      environment:
        - MYSQL_DATABASE=app
        - MYSQL_ROOT_PASSWORD=root
-
     nginx:
      build: ./nginx
      restart: always
