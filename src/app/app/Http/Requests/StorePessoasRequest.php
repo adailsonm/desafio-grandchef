@@ -29,7 +29,7 @@ class StorePessoasRequest extends FormRequest
             'nome' => 'required',
             'senha' => 'required',
             'email' => 'required|email|unique:pessoas',
-            'data_nascimento' => 'required|date'
+            'data_nascimento' => 'required|date|before_or_equal:now'
         ];
     }
 }

@@ -29,7 +29,7 @@ class UpdatePessoasRequest extends FormRequest
             'nome' => 'required',
             'senha' => 'required',
             'email' => 'required|email',
-            'data_nascimento' => 'required|date'
+            'data_nascimento' => 'required|date|before_or_equal:now'
         ];
     }
 }
