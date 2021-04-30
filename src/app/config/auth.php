@@ -74,6 +74,7 @@ return [
         'pessoas' => [
             'driver' => 'eloquent',
             'model' => App\Models\Pessoas::class,
+            'table' => 'pessoas'
 
         ],
     ],

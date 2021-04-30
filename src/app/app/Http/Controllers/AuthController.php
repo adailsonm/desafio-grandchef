@@ -4,21 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Pessoas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $credentials = [
-            "email" => $request->email,
-            "senha" => bcrypt($request->senha)
-        ];
-
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        $crendentials = $request->only(['email', 'senha']);
+        try {
+            $token = JWTAuth::attempt($crendentials);
+            if (!$token) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (JWTException $e) {
+            dd($e);
         }
+
 
         return $this->createNewToken($token);
     }
@@ -27,8 +33,8 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()
+            'expires_in' => $this->guard()->factory()->getTTL() * 60,
+            'user' => $this->guard()->user()
         ]);
     }
 }

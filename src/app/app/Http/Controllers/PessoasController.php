@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePessoasRequest;
 use App\Models\Pessoas;
 use App\Facades\Genero;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PessoasController extends Controller
 {
@@ -38,7 +39,7 @@ class PessoasController extends Controller
         Pessoas::create([
             'nome' => $validatedData['nome'],
             'email' => $validatedData['email'],
-            'senha' => bcrypt($validatedData['senha']),
+            'senha' => Hash::make($validatedData['senha']),
             'data_nascimento' => $validatedData['data_nascimento'],
             'genero' => Pessoas::genero($genero)
         ]);
@@ -64,7 +65,7 @@ class PessoasController extends Controller
         Pessoas::where('id', $id)->update([
             'nome' => $validatedData['nome'],
             'email' => $validatedData['email'],
-            'senha' => bcrypt($validatedData['senha']),
+            'senha' => Hash::make($validatedData['senha']),
             'data_nascimento' => $validatedData['data_nascimento'],
             'genero' => Pessoas::genero($genero),
         ]);
