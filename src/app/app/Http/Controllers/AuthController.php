@@ -30,7 +30,7 @@ class AuthController extends Controller
         }
 
 
-        return $this->createNewToken($token);
+        return $this->respondWithToken($token);
     }
 
     public function me()
