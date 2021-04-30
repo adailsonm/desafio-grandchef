@@ -15,26 +15,48 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $crendentials = $request->only(['email', 'senha']);
+        $crendentials = [
+            "email" => $request->email,
+            "password" => $request->senha
+        ];
+        
         try {
-            $token = JWTAuth::attempt($crendentials);
+            $token = auth()->attempt($crendentials);
             if (!$token) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
         } catch (JWTException $e) {
-            dd($e);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
 
 
         return $this->createNewToken($token);
     }
 
-    protected function createNewToken($token){
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Deslogado com sucesso']);
+    }
+
+
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    protected function respondWithToken($token){
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 60,
-            'user' => $this->guard()->user()
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => auth()->user()
         ]);
     }
 }

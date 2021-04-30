@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'api',
         'passwords' => 'users',
     ],
 
@@ -74,8 +74,6 @@ return [
         'pessoas' => [
             'driver' => 'eloquent',
             'model' => App\Models\Pessoas::class,
-            'table' => 'pessoas'
-
         ],
     ],
 

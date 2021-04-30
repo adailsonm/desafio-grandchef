@@ -15,3 +15,11 @@ necessidade de instalar os itens na maquina local:
 alias artisan="docker-compose exec app php artisan"
 alias composer="docker exec app composer"
 ```
+
+Após isso rodar os seguintes comandos
+
+```
+composer install
+```
+
+Lembrando que todos os comandos listados devem ser executado dentro da pasta do projeto.

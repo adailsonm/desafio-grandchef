@@ -44,7 +44,12 @@ class Pessoas extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims() {
         return [];
-    } 
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->senha; //change the field you want 
+    }
 
     public function scopeFilter($query, $params)
     {
