@@ -6,6 +6,7 @@ use App\Http\Requests\StorePessoasRequest;
 use App\Http\Requests\UpdatePessoasRequest;
 use App\Models\Pessoas;
 use App\Facades\Genero;
+use Illuminate\Http\Request;
 
 class PessoasController extends Controller
 {
@@ -14,9 +15,11 @@ class PessoasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['pessoas'] = Pessoas::all();
+        $params = $request->only('nome', 'email', 'data_nascimento', 'startWith', 'endWith');
+
+        $data['pessoas'] = Pessoas::filter($params)->get();
 
         return response()->json(compact('data'));
     }
