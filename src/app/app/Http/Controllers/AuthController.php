@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pessoas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login']]);
-    }
-    
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'senha');
-        dd($credentials);
+        $credentials = [
+            "email" => $request->email,
+            "senha" => bcrypt($request->senha)
+        ];
+
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }

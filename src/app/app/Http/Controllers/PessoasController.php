@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePessoasRequest;
+use App\Http\Requests\UpdatePessoasRequest;
 use App\Models\Pessoas;
 use App\Facades\Genero;
-use Illuminate\Http\Request;
 
 class PessoasController extends Controller
 {
@@ -54,7 +54,7 @@ class PessoasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StorePessoasRequest $request, $id)
+    public function update(UpdatePessoasRequest $request, $id)
     {
         $validatedData = $request->validated();
         $genero = Genero::genderFull($validatedData['nome']);

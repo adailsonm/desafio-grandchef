@@ -42,7 +42,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'jwt',
             'provider' => 'pessoas',
             'hash' => false,
         ],
@@ -74,6 +74,7 @@ return [
         'pessoas' => [
             'driver' => 'eloquent',
             'model' => App\Models\Pessoas::class,
+
         ],
     ],
 
